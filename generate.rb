@@ -1,40 +1,37 @@
-def rand_circle(image_size_x,image_size_y)
-  circle_size = image_size_x/10
-  circle_pos_x = rand(image_size_x-15)
-  circle_pos_y = rand(image_size_y-15)
-  circle_size_pos_x = circle_pos_x+rand(image_size_x/25)
-  circle_size_pos_y = circle_pos_y+rand(image_size_y/50)
+require 'RMagick'
+include Magick
 
-  string = " -fill 'rgb("+rand(255).to_s+", "+rand(255).to_s+", "+rand(255).to_s+")' \ -draw 'circle "+
-      circle_pos_x.to_s+  #x pos of circle
-      ","+
-      circle_pos_y.to_s+  #y pos of circle
-      " "+
-      circle_size_pos_x.to_s+  #x intersect of circle
-      ","+
-      circle_size_pos_y.to_s+  #y intersect of circle
-      "' \\"
-  string
-end
 
-def image_create(x,y,i)
-  Kernel.system "convert -size "+
-    x.to_s+
-    "x"+
-    y.to_s+
-    " xc:none \ "+
-    rand_circle(x,y)+
-    "images/"+
-    i.to_s+
-    ".png"
-end
-
-def array_create(elements)
-  i=0
-  elements.times do
-	image_create(rand(100)*i+150,rand(100)*i+150,i)
-    i += 1
+def create_layer(x,y,name)
+  imgl = Magick::ImageList.new
+  imgl.new_image(x,y) {self.background_color = "none"}
+  3.times do
+    rand_circle(x,y).draw(imgl)
+    imgl = imgl.wave(rand(4),rand(50)+2)
   end
+  imgl.write("images/"+name.to_s+".png")
 end
 
-array_create(12)
+
+
+def rand_circle(x,y)
+  c_size = rand(20)
+  c_pos_x = rand(x)
+  c_pos_y = rand(y)
+  c_size_pos_x = c_pos_x + c_size
+  c_size_pos_y = c_pos_y + c_size
+  color_string = "rgb("+rand(255).to_s+","+rand(255).to_s+","+rand(255).to_s+")"
+  gc = Magick::Draw.new
+
+  # Draw the circle
+  gc.fill_opacity(0)
+  gc.stroke(color_string).stroke_width(3)
+  gc.circle(c_pos_x, c_pos_y, c_size_pos_x, c_size_pos_y)
+  gc
+end
+
+i=0
+11.times do
+  create_layer(rand(1000)+100,rand(2000)+100,i)
+  i += 1
+end
