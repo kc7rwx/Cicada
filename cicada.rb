@@ -8,7 +8,7 @@ class Tile < Image
 
     #position of circle 
     #nudges position if it will be off of the frame
-    border = 1
+    border = 2
 
     if pos_x <= radius
       pos_x = radius+border
@@ -23,12 +23,7 @@ class Tile < Image
       pos_y = self.rows-radius-border
     else
     end 
-
-    #size of circle
-    c_size_pos_x = pos_x - radius
-    
-    @draw.circle(pos_x, pos_y, c_size_pos_x, pos_y)
-    @draw.draw(self)
+    @draw.circle(pos_x, pos_y, pos_x-radius , pos_y)
     puts @draw.inspect
   end
 
@@ -38,6 +33,7 @@ class Tile < Image
       @draw.opacity(rand).fill('white')
       draw_circle(rand(3),rand(self.columns),rand(self.rows))
     end
+    @draw.draw(self)
   end
 
   def rand_circle(size)
@@ -49,7 +45,9 @@ class Tile < Image
     # Draw the circle
     @draw.fill_opacity(0)
     @draw.stroke(color_string).stroke_width(1)
-    draw_circle(rand(size),rand(self.columns),rand(self.rows))
+    15.times do
+      draw_circle(rand(size),rand(self.columns),rand(self.rows))
+    end
     @draw.draw(self)
   end
 
@@ -59,9 +57,7 @@ def rand1()
   i=1
   11.times do
     image = Tile.new(rand(200*i)+250,rand(200*i)+250) {self.background_color='none'}
-    15.times do
-      image.rand_circle(50)
-    end
+    image.rand_circle(50)
     image.write('images/'+i.to_s+'.png')
     puts 'image '+ i.to_s + ' written'
     i += 1
