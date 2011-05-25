@@ -3,9 +3,10 @@ include Magick
 
 class Tile < Image
 
-  #@draw = Magick::Draw.new
 
   def draw_circle(radius,pos_x,pos_y)
+
+    draw = Magick::Draw.new
 
     #position of circle
     #nudges position if it will be off of the frame
@@ -23,34 +24,29 @@ class Tile < Image
     else
     end
 
-    @draw.circle(pos_x, pos_y, pos_x-radius , pos_y)
+    draw.circle(pos_x, pos_y, pos_x-radius , pos_y)
+    draw.draw(self)
   end
 
-  def draw_rectangle(center,size_x,size_y)
+  def draw_rectangle(center,x_size,y_size)
+    draw = Magick::Draw.new
     point_1_x = center-x_size
     point_1_y = center-y_size
     point_2_x = center+x_size
     point_2_y = center+y_size
-    @draw.rectangle(point_1_x,point_1_y, point_2_x,point_2_y)
-  end
-
-  def draw_to_tile
-    @draw.draw(self)
+    draw.rectangle(point_1_x,point_1_y, point_2_x,point_2_y)
+    draw.draw(self)
   end
 
 end
 
 
-class TileSet
-
-  def initialize
-    @images = []
-  end
+class TileSet < Array
 
   def create_random(seed_size,num_tiles)
-    i=1
+    i=0
     num_tiles.times do
-      @images[i] = Tile.new(rand(seed_size*i),rand(seed_size*i)) {self.background_color='none'}
+      self[i] = Tile.new(rand(seed_size*(i+1))+50,rand(seed_size*(i+1))+50) {self.background_color='none'}
       i += 1
     end
   end
@@ -60,7 +56,7 @@ class TileSet
 
   def write_tile_set
     i=0
-    @images.each do |image|
+    self.each do |image|
       image.write('images/'+i.to_s+'.png')
     i += 1
     end
@@ -70,10 +66,13 @@ end
 
 def generate_rand1
   t = TileSet.new
-  t.create_random(50,10)
+  t.create_random(250,10)
   t.each do |tile|
-    tile.draw_circle(rand(10),rand(tile.columns),rand(tile.rows))
-    tile.draw_to_tile
+    tile.draw_rectangle(rand(25),rand(25),rand(25))
+    rand(10).times do
+      tile.draw_circle(rand(10),rand(tile.columns),rand(tile.rows))
+    end
   end
+  t.write_tile_set
 end
 
