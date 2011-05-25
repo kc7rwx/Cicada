@@ -4,9 +4,12 @@ include Magick
 class Tile < Image
 
 
-  def draw_circle(radius,pos_x,pos_y)
+  def initialize(x,y)
+    super
+    @draw = Magick::Draw.new
+  end
 
-    draw = Magick::Draw.new
+  def draw_circle(radius,pos_x,pos_y)
 
     #position of circle
     #nudges position if it will be off of the frame
@@ -24,20 +27,21 @@ class Tile < Image
     else
     end
 
-    draw.circle(pos_x, pos_y, pos_x-radius , pos_y)
-    draw.draw(self)
+    @draw.circle(pos_x, pos_y, pos_x-radius , pos_y)
   end
 
-  def draw_rectangle(center,x_size,y_size)
-    draw = Magick::Draw.new
-    point_1_x = center-x_size
-    point_1_y = center-y_size
-    point_2_x = center+x_size
-    point_2_y = center+y_size
-    draw.rectangle(point_1_x,point_1_y, point_2_x,point_2_y)
-    draw.draw(self)
+  def draw_rectangle(center,size_x,size_y)
+
+    point_1_x = center-size_x
+    point_1_y = center-size_y
+    point_2_x = center+size_x
+    point_2_y = center+size_y
+    @draw.rectangle(point_1_x,point_1_y, point_2_x,point_2_y)
   end
 
+  def draw
+    @draw.draw(self)
+  end
 end
 
 
@@ -72,7 +76,11 @@ def generate_rand1
     rand(10).times do
       tile.draw_circle(rand(10),rand(tile.columns),rand(tile.rows))
     end
+    tile.draw
   end
   t.write_tile_set
 end
+
+
+generate_rand1
 
