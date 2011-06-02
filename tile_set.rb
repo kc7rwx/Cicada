@@ -3,7 +3,7 @@ class TileSet < Array
   def create_random(seed_size,num_tiles)
     i=0
     num_tiles.times do
-      self[i] = Tile.new(rand(seed_size*(i+1))+50,rand(seed_size*(i+1))+50) {self.background_color='none'}
+      self[i] = Tile.new(rand(seed_size*(i+1))+150,rand(seed_size*(i+1))+150) {self.background_color='none'}
       i += 1
     end
   end

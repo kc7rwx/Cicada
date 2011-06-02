@@ -1,37 +1,113 @@
 require 'RMagick'
+include Magick
 require './tile.rb'
 require './tile_set.rb'
-include Magick
-
-def rand_color
-  color_string = "rgb("+rand(255).to_s+","+rand(255).to_s+","+rand(255).to_s+")"
-  color_string
-end
 
 def generate_rand1
   t = TileSet.new
-  t.create_random(250,10)
+  t.create_random(150,5)
   t.each do |tile|
-    tile.draw_rectangle(rand(25),rand(25),rand(25))
-    rand(10).times do
-      tile.draw_circle(rand(10),rand(tile.columns),rand(tile.rows))
+    (rand(15)+1).times do
+      tile.random_stuff
+      tile.draw_circle(rand(85),rand(tile.columns),rand(tile.rows))
+      tile.draw
     end
+  end
+  t.write_tile_set
+end
+
+def generate_rand2
+  t = TileSet.new
+  t.create_random(200,5)
+  t.each do |tile|
+    (rand(5)+1).times do
+      tile.random_stuff
+      tile.draw_circle(rand(55),rand(tile.columns),rand(tile.rows))
+      tile.draw
+    end
+    (rand(2)+1).times do
+      tile.random_stuff
+      tile.draw_rectangle(rand(85),rand(85),rand(tile.columns),rand(tile.rows))
+      tile.draw
+    end
+  end
+  t.write_tile_set
+end
+
+def generate_xmass
+  t = TileSet.new
+  t.create_random(200,5)
+  t.each do |tile|
+    (rand(5)+1).times do
+      tile.xmass
+      tile.draw_circle(rand(55),rand(tile.columns),rand(tile.rows))
+      tile.draw
+    end
+    (rand(2)+1).times do
+      tile.xmass
+      tile.draw_rectangle(rand(85),rand(85),rand(tile.columns),rand(tile.rows))
+      tile.draw
+    end
+  end
+  t.write_tile_set
+end
+
+
+
+def generate_pattern1
+  grid_size=100
+  t = TileSet.new
+  t.create_grid(grid_size,5)
+  t.each do |tile|
+    tile.random_stuff
+    x=tile.columns/grid_size
+    y=tile.rows/grid_size
+    tile.draw_rectangle(grid_size,grid_size,rand(x)*grid_size,rand(y)*grid_size)
     tile.draw
   end
   t.write_tile_set
 end
 
-def generate_pattern1
+def build
   t = TileSet.new
-  t.create_grid(50,10)
+
+  puts 'Input # of Images'
+  num_tiles = gets.to_i
+
+  puts 'Input Grid Type'
+  puts 'random'
+  puts 'pattern'
+  grid_type = gets.chomp
+  if grid_type == 'random'
+    puts 'Input Seed Size'
+    seed_size = gets.to_i
+    t.create_random(seed_size,num_tiles)
+  elsif grid_type == 'pattern'
+    puts 'Input Grid Size'
+    grid_size = gets.to_i
+    t.create_grid(grid_size,num_tiles)
+  else
+    puts 'invalid'
+  end
+
+
+  puts 'Input Color'
+  puts 'random'
+  puts 'xmass'
+  color = gets.chomp
+
+
   t.each do |tile|
-    100.times do
-      tile.draw_rectangle(4,4,rand(tile.columns),rand(tile.rows))
-    end
+    (rand(15)+1).times do
+      if color == 'random'
+        tile.random_stuff
+      elsif color == 'xmass'
+        tile.xmass
+      end
+      tile.draw_circle(rand(85),rand(tile.columns),rand(tile.rows))
       tile.draw
+    end
   end
   t.write_tile_set
 end
-
-generate_pattern1
 
