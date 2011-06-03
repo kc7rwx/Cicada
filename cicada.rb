@@ -104,7 +104,9 @@ def build
       elsif color == 'xmass'
         tile.xmass
       end
-      tile.draw_circle(rand(85),rand(tile.columns),rand(tile.rows))
+      puts 'circle size'
+      size = gets.to_i
+      tile.draw_circle(rand(seed_size),rand(tile.columns),rand(tile.rows))
       tile.draw
     end
   end

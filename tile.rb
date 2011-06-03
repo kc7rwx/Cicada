@@ -1,5 +1,10 @@
 class Tile < Image
 
+  def initialize(x,y)
+    super
+    @draw = Magick::Draw.new
+  end
+
   def rand_color
     color_string = "rgb("+rand(255).to_s+","+rand(255).to_s+","+rand(255).to_s+")"
     color_string
@@ -22,11 +27,6 @@ class Tile < Image
     @draw.stroke(color)
     @draw.fill(color)
     @draw.opacity(rand)
-  end
-
-  def initialize(x,y)
-    super
-    @draw = Magick::Draw.new
   end
 
   def draw_circle(radius,pos_x,pos_y)
