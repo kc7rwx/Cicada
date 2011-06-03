@@ -83,7 +83,11 @@ def build
     seed_size = gets.to_i
     t.create_random(seed_size,num_tiles)
 <<<<<<< HEAD
+<<<<<<< HEAD
   elsif grid_type == 'pattern'
+=======
+elsif grid_type == 'pattern'
+>>>>>>> origin/master
 =======
 elsif grid_type == 'pattern'
 >>>>>>> origin/master
@@ -109,9 +113,13 @@ elsif grid_type == 'pattern'
         tile.xmass
       end
 <<<<<<< HEAD
+<<<<<<< HEAD
       puts 'circle size'
       size = gets.to_i
       tile.draw_circle(rand(seed_size),rand(tile.columns),rand(tile.rows))
+=======
+      tile.draw_circle(rand(85),rand(tile.columns),rand(tile.rows))
+>>>>>>> origin/master
 =======
       tile.draw_circle(rand(85),rand(tile.columns),rand(tile.rows))
 >>>>>>> origin/master

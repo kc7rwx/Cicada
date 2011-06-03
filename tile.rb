@@ -1,7 +1,10 @@
 class Tile < Image
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> origin/master
   def rand_color
     color_string = "rgb("+rand(255).to_s+","+rand(255).to_s+","+rand(255).to_s+")"
     color_string
@@ -14,6 +17,20 @@ class Tile < Image
     @draw.fill(rand_color)
     @draw.opacity(rand)
   end
+<<<<<<< HEAD
+=======
+
+  def xmass
+    def color
+      ['red','green','white'].sample
+    end
+
+    @draw.stroke_width(2)
+    @draw.stroke(color)
+    @draw.fill(color)
+    @draw.opacity(rand)
+  end
+>>>>>>> origin/master
 
   def xmass
     def color
