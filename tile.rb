@@ -1,5 +1,32 @@
 class Tile < Image
 
+<<<<<<< HEAD
+=======
+  def rand_color
+    color_string = "rgb("+rand(255).to_s+","+rand(255).to_s+","+rand(255).to_s+")"
+    color_string
+  end
+
+  def random_stuff
+
+    @draw.stroke_width(2)
+    @draw.stroke(rand_color)
+    @draw.fill(rand_color)
+    @draw.opacity(rand)
+  end
+
+  def xmass
+    def color
+      ['red','green','white'].sample
+    end
+
+    @draw.stroke_width(2)
+    @draw.stroke(color)
+    @draw.fill(color)
+    @draw.opacity(rand)
+  end
+
+>>>>>>> origin/master
   def initialize(x,y)
     super
     @draw = Magick::Draw.new

@@ -82,7 +82,11 @@ def build
     puts 'Input Seed Size'
     seed_size = gets.to_i
     t.create_random(seed_size,num_tiles)
+<<<<<<< HEAD
   elsif grid_type == 'pattern'
+=======
+elsif grid_type == 'pattern'
+>>>>>>> origin/master
     puts 'Input Grid Size'
     grid_size = gets.to_i
     t.create_grid(grid_size,num_tiles)
@@ -104,9 +108,13 @@ def build
       elsif color == 'xmass'
         tile.xmass
       end
+<<<<<<< HEAD
       puts 'circle size'
       size = gets.to_i
       tile.draw_circle(rand(seed_size),rand(tile.columns),rand(tile.rows))
+=======
+      tile.draw_circle(rand(85),rand(tile.columns),rand(tile.rows))
+>>>>>>> origin/master
       tile.draw
     end
   end
